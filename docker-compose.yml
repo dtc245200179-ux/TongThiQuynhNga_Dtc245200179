@@ -88,6 +88,30 @@ services:
     networks:
       - backend-net
 
+  loki:
+    image: grafana/loki:latest
+    container_name: booking_loki
+    restart: always
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki/loki-config.yml:/etc/loki/local-config.yaml:ro
+    networks:
+      - backend-net
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: booking_promtail
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./promtail/promtail-config.yml:/etc/promtail/config.yml:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    networks:
+      - backend-net
+
 networks:
   backend-net:
     driver: bridge
