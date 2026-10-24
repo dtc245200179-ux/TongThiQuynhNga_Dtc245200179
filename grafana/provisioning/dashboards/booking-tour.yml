@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: Booking Tour
+    orgId: 1
+    folder: Booking Tour
+    type: file
+    disableDeletion: true
+    editable: true
+    options:
+      path: /var/lib/grafana/dashboards

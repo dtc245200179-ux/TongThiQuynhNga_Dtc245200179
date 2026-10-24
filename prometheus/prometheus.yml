@@ -2,10 +2,19 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: 'prometheus'
+  - job_name: prometheus
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: 'fastapi_app'
+  - job_name: fastapi_app
     static_configs:
       - targets: ['booking_api:8000']
+
+  - job_name: postgres
+    static_configs:
+      - targets: ['booking_postgres_exporter:9187']
+
+  - job_name: container_exporter
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['booking_container_exporter:9105']
